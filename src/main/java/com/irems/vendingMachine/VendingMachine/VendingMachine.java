@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -33,5 +32,17 @@ public class VendingMachine {
         int refund = balance;
         balance = 0;
         return refund;
+    }
+
+    public Product buyProduct(){
+        if (selectedProduct.getPrice() <= balance) {
+            Product broughtProduct = selectedProduct;
+            balance -= selectedProduct.getPrice();
+            selectedProduct = null;
+            return broughtProduct;
+        }
+        else {
+            return null;
+        }
     }
 }
