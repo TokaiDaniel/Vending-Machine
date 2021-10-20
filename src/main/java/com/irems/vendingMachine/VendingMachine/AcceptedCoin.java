@@ -2,7 +2,7 @@ package com.irems.vendingMachine.VendingMachine;
 
 import java.util.stream.Stream;
 
-public enum Coin {
+public enum AcceptedCoin {
     PENNY(1),
     NICKEL(5),
     DIME(10),
@@ -10,7 +10,7 @@ public enum Coin {
 
     private final Integer value;
 
-    Coin(int value) {
+    AcceptedCoin(int value) {
         this.value = value;
     }
 
@@ -18,7 +18,7 @@ public enum Coin {
         return value;
     }
 
-    public static Stream<Coin> stream() {
-        return Stream.of(Coin.values());
+    public static Stream<AcceptedCoin> stream() {
+        return Stream.of(AcceptedCoin.values());
     }
 }
