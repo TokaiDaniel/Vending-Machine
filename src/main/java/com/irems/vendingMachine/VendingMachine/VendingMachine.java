@@ -28,4 +28,10 @@ public class VendingMachine {
                 .filter(product -> product.getName().equals(nameOfProduct))
                 .findFirst().ifPresent(product -> selectedProduct = product);
     }
+
+    public int refund() {
+        int refund = balance;
+        balance = 0;
+        return refund;
+    }
 }
