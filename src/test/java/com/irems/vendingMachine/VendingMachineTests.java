@@ -55,11 +55,23 @@ class VendingMachineTests {
 
 	@Test
 	void doNotAcceptNegativeCoin() {
-		int coin = -7;
+		int coin = -10;
 		underTest.insertCoin(coin);
 		int zero = 0;
 		assertEquals(zero, underTest.getBalance());
 	}
 
-
+	@Test
+	void moreCoinsAcceptedInSuccession() {
+		int penny = 1;
+		int nickel = 5;
+		int dime = 10;
+		int quarter = 25;
+		int sumOfCoins = penny + nickel + dime + quarter;
+		underTest.insertCoin(penny);
+		underTest.insertCoin(nickel);
+		underTest.insertCoin(dime);
+		underTest.insertCoin(quarter);
+		assertEquals(sumOfCoins, underTest.getBalance());
+	}
 }
