@@ -1,11 +1,13 @@
 package com.irems.vendingMachine;
 
+import com.irems.vendingMachine.VendingMachine.Product;
 import com.irems.vendingMachine.VendingMachine.VendingMachine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 class VendingMachineTests {
@@ -73,5 +75,42 @@ class VendingMachineTests {
 		underTest.insertCoin(dime);
 		underTest.insertCoin(quarter);
 		assertEquals(sumOfCoins, underTest.getBalance());
+	}
+
+	@Test
+	void selectProductCoke() {
+		String product = "Coke";
+		underTest.selectProduct(product);
+		assertEquals(Product.COKE, underTest.getSelectedProduct());
+	}
+
+	@Test
+	void selectProductPepsi() {
+		String product = "Pepsi";
+		underTest.selectProduct(product);
+		assertEquals(Product.PEPSI, underTest.getSelectedProduct());
+	}
+
+	@Test
+	void selectProductSoda() {
+		String product = "Soda";
+		underTest.selectProduct(product);
+		assertEquals(Product.SODA, underTest.getSelectedProduct());
+	}
+
+	@Test
+	void changeSelectedProduct() {
+		String soda = "Soda";
+		underTest.selectProduct(soda);
+		String coke = "Coke";
+		underTest.selectProduct(coke);
+		assertEquals(Product.COKE, underTest.getSelectedProduct());
+	}
+
+	@Test
+	void wrongStringSelectedProduct() {
+		String product = "Szoda";
+		underTest.selectProduct(product);
+		assertNull(underTest.getSelectedProduct());
 	}
 }
