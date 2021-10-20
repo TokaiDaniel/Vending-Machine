@@ -19,6 +19,9 @@ class VendingMachineTests {
 	int dime = 10;
 	int quarter = 25;
 	int sumOfCoins = penny + nickel + dime + quarter;
+	Product coke = Product.COKE;
+	Product pepsi = Product.PEPSI;
+	Product soda = Product.SODA;
 
 	@BeforeEach
 	void setUp() {
@@ -76,30 +79,30 @@ class VendingMachineTests {
 	void selectProductCoke() {
 		String product = "Coke";
 		underTest.selectProduct(product);
-		assertEquals(Product.COKE, underTest.getSelectedProduct());
+		assertEquals(coke, underTest.getSelectedProduct());
 	}
 
 	@Test
 	void selectProductPepsi() {
 		String product = "Pepsi";
 		underTest.selectProduct(product);
-		assertEquals(Product.PEPSI, underTest.getSelectedProduct());
+		assertEquals(pepsi, underTest.getSelectedProduct());
 	}
 
 	@Test
 	void selectProductSoda() {
 		String product = "Soda";
 		underTest.selectProduct(product);
-		assertEquals(Product.SODA, underTest.getSelectedProduct());
+		assertEquals(soda, underTest.getSelectedProduct());
 	}
 
 	@Test
 	void changeSelectedProduct() {
 		String soda = "Soda";
 		underTest.selectProduct(soda);
-		String coke = "Coke";
-		underTest.selectProduct(coke);
-		assertEquals(Product.COKE, underTest.getSelectedProduct());
+		String cokeString = "Coke";
+		underTest.selectProduct(cokeString);
+		assertEquals(coke, underTest.getSelectedProduct());
 	}
 
 	@Test
@@ -111,18 +114,36 @@ class VendingMachineTests {
 
 	@Test
 	void refundGivesBackMoney() {
-		underTest.insertCoin(penny);
-		underTest.insertCoin(nickel);
-		underTest.insertCoin(dime);
-		underTest.insertCoin(quarter);
+		underTest.setBalance(sumOfCoins);
 		assertEquals(sumOfCoins, underTest.refund());
 	}
 
 	@Test
 	void refundSetsBalanceToZero() {
-		int coin = 10;
-		underTest.insertCoin(coin);
+		underTest.setBalance(sumOfCoins);
 		underTest.refund();
 		assertEquals(zeroBalance, underTest.getBalance());
+	}
+
+	@Test
+	void buyProductEnoughBalanceReturnsProduct() {
+		underTest.setBalance(quarter);
+		underTest.setSelectedProduct(coke);
+		assertEquals(coke, underTest.buyProduct());
+	}
+
+	@Test
+	void buyProductNotEnoughBalanceReturnsNull() {
+		underTest.setBalance(dime);
+		underTest.setSelectedProduct(coke);
+		assertNull(underTest.buyProduct());
+	}
+
+	@Test
+	void buyProductAfterBuyingTheCorrectBalanceRemains() {
+		underTest.setBalance(sumOfCoins);
+		underTest.setSelectedProduct(coke);
+		underTest.buyProduct();
+		assertEquals(sumOfCoins - coke.getPrice(), underTest.getBalance());
 	}
 }
