@@ -1,5 +1,6 @@
 package com.irems.vendingMachine;
 
+import com.irems.vendingMachine.VendingMachine.AcceptedCoin;
 import com.irems.vendingMachine.VendingMachine.Product;
 import com.irems.vendingMachine.VendingMachine.VendingMachine;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,11 +18,11 @@ class VendingMachineTests {
 	private VendingMachine underTest;
 	private HashMap<Product,Integer> startingInventory = new HashMap<>();
 	int zeroBalance = 0;
-	int penny = 1;
-	int nickel = 5;
-	int dime = 10;
-	int quarter = 25;
-	int sumOfCoins = penny + nickel + dime + quarter;
+	AcceptedCoin penny = AcceptedCoin.PENNY;
+	AcceptedCoin nickel = AcceptedCoin.NICKEL;
+	AcceptedCoin dime = AcceptedCoin.DIME;
+	AcceptedCoin quarter = AcceptedCoin.QUARTER;
+	int sumOfCoins = penny.getValue() + nickel.getValue() + dime.getValue() + quarter.getValue();
 	Product coke = Product.COKE;
 	Product pepsi = Product.PEPSI;
 	Product soda = Product.SODA;
@@ -37,39 +38,13 @@ class VendingMachineTests {
 	@Test
 	void acceptPennyCoin() {
 		underTest.insertCoin(penny);
-		assertEquals(penny, underTest.getBalance());
-	}
-
-	@Test
-	void acceptNickelCoin() {
-		underTest.insertCoin(nickel);
-		assertEquals(nickel, underTest.getBalance());
+		assertEquals(penny.getValue(), underTest.getBalance());
 	}
 
 	@Test
 	void acceptDimeCoin() {
 		underTest.insertCoin(dime);
-		assertEquals(dime, underTest.getBalance());
-	}
-
-	@Test
-	void acceptQuarterCoin() {
-		underTest.insertCoin(quarter);
-		assertEquals(quarter, underTest.getBalance());
-	}
-
-	@Test
-	void doNotAcceptUnknownCoin() {
-		int coin = 7;
-		underTest.insertCoin(coin);
-		assertEquals(zeroBalance, underTest.getBalance());
-	}
-
-	@Test
-	void doNotAcceptNegativeCoin() {
-		int coin = -10;
-		underTest.insertCoin(coin);
-		assertEquals(zeroBalance, underTest.getBalance());
+		assertEquals(dime.getValue(), underTest.getBalance());
 	}
 
 	@Test
@@ -133,24 +108,25 @@ class VendingMachineTests {
 
 	@Test
 	void buyProductEnoughBalanceReturnsProduct() {
-		underTest.setBalance(quarter);
-		underTest.setSelectedProduct(coke);
+		underTest.insertCoin(quarter);
+		underTest.selectProduct("Coke");
 		assertEquals(coke, underTest.buyProduct());
 	}
 
 	@Test
 	void buyProductNotEnoughBalanceReturnsNull() {
-		underTest.setBalance(dime);
-		underTest.setSelectedProduct(coke);
+		underTest.insertCoin(dime);
+		underTest.selectProduct("Coke");
 		assertNull(underTest.buyProduct());
 	}
 
 	@Test
 	void buyProductAfterBuyingTheCorrectBalanceRemains() {
-		underTest.setBalance(sumOfCoins);
-		underTest.setSelectedProduct(coke);
+		underTest.insertCoin(dime);
+		underTest.insertCoin(quarter);
+		underTest.selectProduct("Coke");
 		underTest.buyProduct();
-		assertEquals(sumOfCoins - coke.getPrice(), underTest.getBalance());
+		assertEquals(dime.getValue() + quarter.getValue() - coke.getPrice(), underTest.getBalance());
 	}
 
 	@Test
