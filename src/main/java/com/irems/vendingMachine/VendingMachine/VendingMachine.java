@@ -62,4 +62,8 @@ public class VendingMachine {
             }
         });
     }
+
+    public int reportConsumptionByProduct(Product product) {
+        return startingInventory.get(product) - currentInventory.get(product);
+    }
 }
