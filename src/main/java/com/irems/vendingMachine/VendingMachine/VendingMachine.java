@@ -28,10 +28,8 @@ public class VendingMachine {
         balance += coin.getValue();
     }
 
-    public void selectProduct(String nameOfProduct) {
-        Product.stream()
-                .filter(product -> product.getName().equals(nameOfProduct))
-                .findFirst().ifPresent(product -> selectedProduct = product);
+    public void selectProduct(Product product) {
+        selectedProduct = product;
     }
 
     public int refund() {
