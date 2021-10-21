@@ -1,10 +1,12 @@
 package com.irems.vendingMachine.VendingMachine;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 @Service
 @NoArgsConstructor
@@ -13,8 +15,14 @@ import org.springframework.stereotype.Service;
 public class VendingMachine {
 
     private int balance = 0;
-
     private Product selectedProduct;
+    private HashMap<Product,Integer> startingInventory = new HashMap<>();
+    private HashMap<Product,Integer> currentInventory = new HashMap<>();
+
+    public VendingMachine(HashMap<Product, Integer> startingInventory) {
+        this.startingInventory = SerializationUtils.clone(startingInventory);
+        this.currentInventory = SerializationUtils.clone(startingInventory);
+    }
 
     public void insertCoin(Integer value) {
         AcceptedCoin.stream()
@@ -39,10 +47,19 @@ public class VendingMachine {
             Product broughtProduct = selectedProduct;
             balance -= selectedProduct.getPrice();
             selectedProduct = null;
+            upgradeInventory(broughtProduct);
             return broughtProduct;
         }
         else {
             return null;
         }
+    }
+
+    public void upgradeInventory(Product boughtProduct) {
+        currentInventory.forEach((product, numberOfUnits) -> {
+            if (product.equals(boughtProduct)) {
+                currentInventory.put(boughtProduct,numberOfUnits - 1);
+            }
+        });
     }
 }
