@@ -66,4 +66,11 @@ public class VendingMachine {
     public int reportConsumptionByProduct(Product product) {
         return startingInventory.get(product) - currentInventory.get(product);
     }
+
+    public void resetOperation(HashMap<Product, Integer> newInventory) {
+        balance = 0;
+        selectedProduct = null;
+        this.startingInventory = SerializationUtils.clone(newInventory);
+        this.currentInventory = SerializationUtils.clone(newInventory);
+    }
 }
