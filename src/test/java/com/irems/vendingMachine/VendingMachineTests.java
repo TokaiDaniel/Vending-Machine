@@ -57,40 +57,10 @@ class VendingMachineTests {
 	}
 
 	@Test
-	void selectProductCoke() {
-		String product = "Coke";
-		underTest.selectProduct(product);
-		assertEquals(coke, underTest.getSelectedProduct());
-	}
-
-	@Test
-	void selectProductPepsi() {
-		String product = "Pepsi";
-		underTest.selectProduct(product);
-		assertEquals(pepsi, underTest.getSelectedProduct());
-	}
-
-	@Test
-	void selectProductSoda() {
-		String product = "Soda";
-		underTest.selectProduct(product);
-		assertEquals(soda, underTest.getSelectedProduct());
-	}
-
-	@Test
 	void changeSelectedProduct() {
-		String soda = "Soda";
 		underTest.selectProduct(soda);
-		String cokeString = "Coke";
-		underTest.selectProduct(cokeString);
+		underTest.selectProduct(coke);
 		assertEquals(coke, underTest.getSelectedProduct());
-	}
-
-	@Test
-	void wrongStringSelectedProduct() {
-		String product = "Szoda";
-		underTest.selectProduct(product);
-		assertNull(underTest.getSelectedProduct());
 	}
 
 	@Test
@@ -109,14 +79,14 @@ class VendingMachineTests {
 	@Test
 	void buyProductEnoughBalanceReturnsProduct() {
 		underTest.insertCoin(quarter);
-		underTest.selectProduct("Coke");
+		underTest.selectProduct(coke);
 		assertEquals(coke, underTest.buyProduct());
 	}
 
 	@Test
 	void buyProductNotEnoughBalanceReturnsNull() {
 		underTest.insertCoin(dime);
-		underTest.selectProduct("Coke");
+		underTest.selectProduct(coke);
 		assertNull(underTest.buyProduct());
 	}
 
@@ -124,7 +94,7 @@ class VendingMachineTests {
 	void buyProductAfterBuyingTheCorrectBalanceRemains() {
 		underTest.insertCoin(dime);
 		underTest.insertCoin(quarter);
-		underTest.selectProduct("Coke");
+		underTest.selectProduct(coke);
 		underTest.buyProduct();
 		assertEquals(dime.getValue() + quarter.getValue() - coke.getPrice(), underTest.getBalance());
 	}
@@ -167,7 +137,7 @@ class VendingMachineTests {
 
 	@Test
 	void resetOperationSelectedProduct() {
-		underTest.selectProduct("coke");
+		underTest.selectProduct(coke);
 		underTest.resetOperation(startingInventory);
 		assertNull(underTest.getSelectedProduct());
 	}
