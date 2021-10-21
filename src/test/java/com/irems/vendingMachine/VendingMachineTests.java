@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class VendingMachineTests {
 
 	private VendingMachine underTest;
+	private HashMap<Product,Integer> startingInventory = new HashMap<>();
 	int zeroBalance = 0;
 	int penny = 1;
 	int nickel = 5;
@@ -25,7 +28,10 @@ class VendingMachineTests {
 
 	@BeforeEach
 	void setUp() {
-		underTest = new VendingMachine();
+		startingInventory.put(coke, 5);
+		startingInventory.put(pepsi, 4);
+		startingInventory.put(soda, 10);
+		underTest = new VendingMachine(startingInventory);
 	}
 
 	@Test
@@ -145,5 +151,12 @@ class VendingMachineTests {
 		underTest.setSelectedProduct(coke);
 		underTest.buyProduct();
 		assertEquals(sumOfCoins - coke.getPrice(), underTest.getBalance());
+	}
+
+	@Test
+	void upgradeInventoryAfterBuyingAProduct() {
+		underTest.upgradeInventory(coke);
+		int reducedInventory = startingInventory.get(coke) - 1;
+		assertEquals(reducedInventory, underTest.getCurrentInventory().get(coke));
 	}
 }
