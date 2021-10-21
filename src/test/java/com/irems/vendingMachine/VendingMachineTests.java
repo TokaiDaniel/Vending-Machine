@@ -181,4 +181,26 @@ class VendingMachineTests {
 		underTest.upgradeInventory(coke);
 		assertEquals(boughtProducts, underTest.reportConsumptionByProduct(soda));
 	}
+
+	@Test
+	void resetOperationBalance() {
+		underTest.insertCoin(dime);
+		underTest.resetOperation(startingInventory);
+		assertEquals(zeroBalance, underTest.getBalance());
+	}
+
+	@Test
+	void resetOperationSelectedProduct() {
+		underTest.selectProduct("coke");
+		underTest.resetOperation(startingInventory);
+		assertNull(underTest.getSelectedProduct());
+	}
+
+	@Test
+	void resetOperationInventory() {
+		underTest.upgradeInventory(coke);
+		underTest.upgradeInventory(coke);
+		underTest.resetOperation(startingInventory);
+		assertEquals(0, underTest.reportConsumptionByProduct(coke));
+	}
 }
