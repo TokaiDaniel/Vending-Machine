@@ -159,4 +159,26 @@ class VendingMachineTests {
 		int reducedInventory = startingInventory.get(coke) - 1;
 		assertEquals(reducedInventory, underTest.getCurrentInventory().get(coke));
 	}
+
+	@Test
+	void reportConsumptionByProductNoProductBought() {
+		int boughtProducts = 0;
+		assertEquals(boughtProducts, underTest.reportConsumptionByProduct(coke));
+	}
+
+	@Test
+	void reportConsumptionByProductTwoProductBought() {
+		int boughtProducts = 2;
+		underTest.upgradeInventory(coke);
+		underTest.upgradeInventory(coke);
+		assertEquals(boughtProducts, underTest.reportConsumptionByProduct(coke));
+	}
+
+	@Test
+	void reportConsumptionByProductOtherProductsNotEffected() {
+		int boughtProducts = 0;
+		underTest.upgradeInventory(coke);
+		underTest.upgradeInventory(coke);
+		assertEquals(boughtProducts, underTest.reportConsumptionByProduct(soda));
+	}
 }
