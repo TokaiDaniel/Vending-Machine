@@ -1,5 +1,7 @@
 package com.irems.vendingMachine.VendingMachine;
 
+import com.irems.vendingMachine.Coin.AcceptedCoin;
+import com.irems.vendingMachine.Product.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

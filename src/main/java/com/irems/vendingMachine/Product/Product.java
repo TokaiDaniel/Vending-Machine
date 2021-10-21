@@ -1,4 +1,4 @@
-package com.irems.vendingMachine.VendingMachine;
+package com.irems.vendingMachine.Product;
 
 import java.util.stream.Stream;
 

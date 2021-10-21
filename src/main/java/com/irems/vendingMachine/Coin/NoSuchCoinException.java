@@ -1,4 +1,4 @@
-package com.irems.vendingMachine.VendingMachine;
+package com.irems.vendingMachine.Coin;
 
 public class NoSuchCoinException extends Exception {
 }

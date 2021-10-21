@@ -1,7 +1,7 @@
 package com.irems.vendingMachine;
 
-import com.irems.vendingMachine.VendingMachine.AcceptedCoin;
-import com.irems.vendingMachine.VendingMachine.Product;
+import com.irems.vendingMachine.Coin.AcceptedCoin;
+import com.irems.vendingMachine.Product.Product;
 import com.irems.vendingMachine.VendingMachine.VendingMachine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

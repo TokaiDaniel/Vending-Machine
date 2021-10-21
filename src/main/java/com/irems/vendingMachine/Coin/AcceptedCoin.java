@@ -1,6 +1,5 @@
-package com.irems.vendingMachine.VendingMachine;
+package com.irems.vendingMachine.Coin;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum AcceptedCoin {

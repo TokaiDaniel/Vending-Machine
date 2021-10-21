@@ -1,7 +1,7 @@
 package com.irems.vendingMachine;
 
-import com.irems.vendingMachine.VendingMachine.AcceptedCoin;
-import com.irems.vendingMachine.VendingMachine.NoSuchCoinException;
+import com.irems.vendingMachine.Coin.AcceptedCoin;
+import com.irems.vendingMachine.Coin.NoSuchCoinException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

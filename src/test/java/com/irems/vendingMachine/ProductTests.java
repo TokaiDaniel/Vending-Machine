@@ -1,8 +1,8 @@
 package com.irems.vendingMachine;
 
 
-import com.irems.vendingMachine.VendingMachine.NoSuchProductException;
-import com.irems.vendingMachine.VendingMachine.Product;
+import com.irems.vendingMachine.Product.NoSuchProductException;
+import com.irems.vendingMachine.Product.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
