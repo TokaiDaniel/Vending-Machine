@@ -24,10 +24,8 @@ public class VendingMachine {
         this.currentInventory = SerializationUtils.clone(startingInventory);
     }
 
-    public void insertCoin(Integer value) {
-        AcceptedCoin.stream()
-                .filter(coin -> coin.getValue().equals(value))
-                .findFirst().ifPresent(coin -> balance += coin.getValue());
+    public void insertCoin(AcceptedCoin coin) {
+        balance += coin.getValue();
     }
 
     public void selectProduct(String nameOfProduct) {
