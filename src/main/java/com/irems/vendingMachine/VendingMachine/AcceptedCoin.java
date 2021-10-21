@@ -1,5 +1,6 @@
 package com.irems.vendingMachine.VendingMachine;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum AcceptedCoin {
@@ -16,6 +17,14 @@ public enum AcceptedCoin {
 
     public Integer getValue() {
         return value;
+    }
+
+    public static AcceptedCoin convertValueToCoin(int value) throws NoSuchCoinException {
+        AcceptedCoin thrownInCoin = AcceptedCoin.stream()
+                .filter(coin -> coin.getValue().equals(value))
+                .findFirst()
+                .orElseThrow(NoSuchCoinException::new);
+        return thrownInCoin;
     }
 
     public static Stream<AcceptedCoin> stream() {
