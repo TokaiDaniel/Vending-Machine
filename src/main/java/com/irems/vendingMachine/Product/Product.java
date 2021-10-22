@@ -24,11 +24,10 @@ public enum Product {
     }
 
     public static Product convertStringToProduct(String name) throws NoSuchProductException {
-        Product productName = Product.stream()
+        return Product.stream()
                 .filter(product -> product.getName().equals(name))
                 .findFirst()
                 .orElseThrow(NoSuchProductException::new);
-        return productName;
     }
 
     public static Stream<Product> stream() {

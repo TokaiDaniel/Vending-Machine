@@ -19,11 +19,10 @@ public enum AcceptedCoin {
     }
 
     public static AcceptedCoin convertValueToCoin(int value) throws NoSuchCoinException {
-        AcceptedCoin thrownInCoin = AcceptedCoin.stream()
+        return AcceptedCoin.stream()
                 .filter(coin -> coin.getValue().equals(value))
                 .findFirst()
                 .orElseThrow(NoSuchCoinException::new);
-        return thrownInCoin;
     }
 
     public static Stream<AcceptedCoin> stream() {
