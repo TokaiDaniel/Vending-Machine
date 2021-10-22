@@ -100,6 +100,14 @@ class VendingMachineTests {
 	}
 
 	@Test
+	void buyProductAfterBuyingTheSelectedProductIsSetToNull() {
+		underTest.insertCoin(quarter);
+		underTest.selectProduct(coke);
+		underTest.buyProduct();
+		assertNull(underTest.getSelectedProduct());
+	}
+
+	@Test
 	void upgradeInventoryAfterBuyingAProduct() {
 		underTest.upgradeInventory(coke);
 		int reducedInventory = startingInventory.get(coke) - 1;
@@ -136,9 +144,23 @@ class VendingMachineTests {
 	}
 
 	@Test
+	void resetOperationBalanceDefaultInventory() {
+		underTest.insertCoin(dime);
+		underTest.resetOperation();
+		assertEquals(zeroBalance, underTest.getBalance());
+	}
+
+	@Test
 	void resetOperationSelectedProduct() {
 		underTest.selectProduct(coke);
 		underTest.resetOperation(startingInventory);
+		assertNull(underTest.getSelectedProduct());
+	}
+
+	@Test
+	void resetOperationSelectedProductDefaultInventory() {
+		underTest.selectProduct(coke);
+		underTest.resetOperation();
 		assertNull(underTest.getSelectedProduct());
 	}
 
@@ -147,6 +169,14 @@ class VendingMachineTests {
 		underTest.upgradeInventory(coke);
 		underTest.upgradeInventory(coke);
 		underTest.resetOperation(startingInventory);
+		assertEquals(0, underTest.reportConsumptionByProduct(coke));
+	}
+
+	@Test
+	void resetOperationInventoryDefaultInventory() {
+		underTest.upgradeInventory(coke);
+		underTest.upgradeInventory(coke);
+		underTest.resetOperation();
 		assertEquals(0, underTest.reportConsumptionByProduct(coke));
 	}
 }
